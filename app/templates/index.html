@@ -3,29 +3,63 @@
 {% block title %} Index {% endblock %}
 
 {% block content %}
+
     <div class="row">
         
         <div class="col-8">
-            <div class="jumbotron mt-1">
-                <h1 class="display-4">Hello, world!</h1>
-                <p class="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
+            <div class="jumbotron mt-1 ml-1" id="jumbotron">
+                <h1 class="display-4">Hola, Bienvenido!</h1>
+                <p class="lead">Youth Speak&trade; te da la bienvenida a nuestra gran comunidad...!</p>
+                    <img src="https://media.giphy.com/media/SWX5NqsKI6kv84u5Mn/giphy.gif" width=30% alt="Hola!">
                 <hr class="my-4">
-                <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
-                <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
+                <p>Si quieres saber mas sobre nosotros...</p>
+                <a class="btn btn-success btn-lg" href="#" role="button" id="jbt_btn">Click aqui!</a>
               </div>
         </div>
 
+        {% from "_macro.html" import render_field %}
         <div class="col-4">
             
-            <div class="card" style="width: 18rem;">
+            <div class="card mt-1 mr-2">
+                <img src="{{ url_for('static', filename='image/video-conference-5352757_1280.png') }}" class="card-img-top" alt="forum">
                 <div class="card-body">
-                  <h5 class="card-title">Card title</h5>
-                  <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
-                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                  <a href="#" class="card-link">Card link</a>
-                  <a href="#" class="card-link">Another link</a>
+                  <h5 class="card-title">Unete a nuestra comunidad!</h5>
+                  <p class="card-text">Registrate si eres nuevo o Inicia Sesion si ya estas registrado.</p>
                 </div>
-              </div>
+                <form class="ml-5" name="sentMessage" id="login_form" method="POST" action="">
+
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+                    <div class="row control-group">
+                        <div class="form-group col-xs-12 floating-label-form-group controls pl-5 pr-5">
+                            
+                            <strong>{{ render_field(form.username, class='form-control') }}</strong>
+    
+                            <p class="help-block text-danger"></p>
+                        </div>
+                    </div>
+
+                    <div class="row control-group">
+                        <div class="form-group col-xs-12 floating-label-form-group controls pl-5 pr-5">
+                            
+                            <strong>{{ render_field(form.password, class='form-control') }}</strong>
+    
+                            <p class="help-block text-danger"></p>
+                        </div>
+                    </div>
+
+                    <div id="success"></div>
+                    <div class="row">
+                        <div class="form-group col-xs-12 pl-5 pr-5">
+                            <button type="submit" class="btn btn-outline-primary">Entrar</button>
+                            <button type="button" class="btn btn-outline-secondary">Registro</button>
+                        </div>
+                    </div>
+
+                </form>
+
+            </div>
+
         </div>
 
     </div>

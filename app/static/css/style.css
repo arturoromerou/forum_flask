@@ -1,0 +1,35 @@
+#jumbotron {
+    background-color: darkcyan;
+}
+
+.success {
+    background-color: rgb(8, 253, 0);
+}
+
+.error {
+    background-color: red;
+}
+
+#nav_entrar {
+    border-radius: 20px;
+}
+
+#nav_unirse {
+    border-radius: 20px;
+}
+
+#jbt_btn {
+    border-radius: 20px;
+}
+
+#lgn_btn {
+    border-radius: 20px;
+}
+
+#lgn_img {
+    width: 10%;
+}
+
+#ipt-usr {
+    border-radius: 20px;
+}

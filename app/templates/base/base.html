@@ -9,26 +9,51 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" 
             integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" 
             crossorigin="anonymous">
+
+    <!-- link CSS local -->
+    <link rel="stylesheet" type="text/css" href=" {{ url_for('static', filename='css/style.css') }} ">
+
 </head>
 <body>
     <!-- barra de navegacion -->
-    <nav class="navbar navbar-dark bg-dark">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <a class="navbar-brand" href="/">
-            <img src="{{ url_for('static', filename='image/Youth_Speak_Forum_Logo.png') }}" width="40" height="40" class="d-inline-block align-top" alt="logo" loading="lazy">
-          Forum
+            <img src="{{ url_for('static', filename='image/Youth_Speak_Forum_Logo.png') }}" 
+                width="40" height="40" class="d-inline-block align-top" alt="logo" loading="lazy">
         </a>
+
+        <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
+            <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+              <li class="nav-item active">
+                <a class="nav-link" href="#">Comentarios<span class="sr-only">(current)</span></a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">Chat</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#" tabindex="-1" aria-disabled="true">Usuarios</a>
+              </li>
+            </ul>
+        </div>
+
+        <div>
+            <a href="/login">
+                <button class="btn btn-outline-primary my-2 my-sm-0" type="submit" id="nav_entrar">Entrar</button>
+            </a>
+            <button class="btn btn-primary my-2 my-sm-0" type="button" id="nav_unirse">Unirse</button>
+        </div>
+
     </nav>
 
-    {% with messages = get_flashed_messages() %} <!-- get_flashed_messages devuelve los mensaje si es que hay -->
-        {% if messages %}
-            
-                {% for message in messages %}
-                    <div class="alert alert-success">
-                        {{ message }}
-                    </div>
-                {% endfor %}
-
-        {% endif %}
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% for category, message in messages %}
+            <div class="alert alert-secondary alert-dismissible fade show {{ category }}" role="alert">
+                {{ message }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        {% endfor %}
     {% endwith %}
 
     {% block content %}
