@@ -53,12 +53,14 @@ def index():
             session['username'] = username
             session['user_id'] = user.id
             
-            return redirect( url_for('user_page') )
+            return redirect(url_for('user_page'))
             
         else:
             error_message= 'Usuario o password no validos!'
             print(User.query.filter_by(username = username).first())
             flash(error_message)
+
+            return redirect(url_for('login'))
             
         session['username'] = login_form.username.data
     return render_template('index.html', form = login_form)
