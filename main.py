@@ -110,6 +110,8 @@ def login():
             error_message= 'Usuario o password no validos!'
             print(User.query.filter_by(username = username).first())
             flash(error_message)
+
+            return redirect(url_for('login'))
             
         session['username'] = login_form.username.data
 
