@@ -32,7 +32,7 @@ def page_not_found(e):
 
 @app.before_request
 def before_request():
-    if 'username' not in session and request.endpoint in ['comments']:
+    if 'username' not in session and request.endpoint in ['comments', 'reviews']:
         return redirect(url_for('login'))
 
     elif 'username' in session and request.endpoint in ['login', 'register']:
@@ -143,6 +143,20 @@ def comments():
     title = "Comment"
     return render_template('comments.html', title = title, form = comment_form)
 
+@app.route('/reviews', methods = ['GET'])
+@app.route('/reviews/<int:page>', methods=['GET'])
+def reviews(page=1):
+    comment_list = Comment.query.join(User).add_columns(
+                    User.username, 
+                    Comment.text,
+                    Comment.created_date).paginate(
+                        page,
+                        app.config['POSTS_PER_PAGE'],
+                        False)
+        
+    return render_template('reviews.html',
+        comments = comment_list,
+        date_format = date_format)
 
 if __name__ == '__main__':
     csrf.init_app(app)

@@ -1,0 +1,77 @@
+{% extends 'base/base_user.html' %}
+
+{% block title %} Reviews {% endblock %}
+
+{% block content %}
+
+    {% if comments %}
+        {% for comment in comments.items %}
+        <br>
+            <div class="card text-center text-white bg-secondary">
+            <h5 class="card-header" style="background-color: black;">
+                Comentario
+            </h5>
+            <div class="card-body">
+                <h5 class="card-title" style="color: black;">
+                    {{ comment.username }}
+                </h5>
+                <p class="card-text">
+                    {{ comment.text }}
+                </p>
+                <footer class="blockquote-footer" style="color: black;">
+                    {{ date_format(comment.created_date) }} 
+                </footer>
+            </div>
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    <br>
+
+    <nav aria-label="pagination-comments">
+      <ul class="pagination justify-content-center">
+        <!-- previous page -->
+        {% if comments.has_prev %}
+          <li class="page-item">
+            <a href="{{ url_for('reviews', page=comments.prev_num) }}" 
+              class="page-link bg-dark text-white" 
+              aria-label="Previous"><span aria-hidden="true">&laquo;</span>
+            </a>
+          </li>
+        {% endif %}
+
+        <!-- all page numbers -->
+        {% for page_num in comments.iter_pages() %}
+        {% if page_num %}
+            {% if page_num != comments.page %}
+                <li class="page-item">
+                    <a class="page-link bg-dark text-white" 
+                    href="{{ url_for('reviews', page=page_num) }}">{{ page_num }}</a>
+                </li>
+            {% else %}
+                <li class="page-item active bg-danger text-white">
+                    <a class="page-link" href="#">{{ page_num }}</a>
+                </li>
+            {% endif %}
+        {% else %}
+          <li class="page-item">
+              <a class="page-link" style="white-space; nowrap; text-overflow: ellipsis">…</a>
+          </li>
+        {% endif %}
+        {% endfor %}
+        
+        <!-- next page -->
+        {% if comments.has_next %}
+          <li class="page-item">
+            <a href="{{ url_for('reviews', page=comments.next_num) }}"
+            class="page-link bg-dark text-white"
+            aria-label="Next"><span aria-hidden="true">&raquo;</span>
+            </a>
+          </li>
+        {% endif %}
+
+      </ul>
+    </nav>
+
+{% endblock %}
+

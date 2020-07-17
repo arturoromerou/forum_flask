@@ -55,6 +55,6 @@ class LoginForm(Form):
 
 class CommentForm(Form):
     
-    comment = TextAreaField('Comentario')
+    comment = TextAreaField('')
     honeypot = HiddenField('', [length_honeypot])
 

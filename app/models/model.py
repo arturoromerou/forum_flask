@@ -34,3 +34,4 @@ class Comment(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     text = db.Column(db.Text())
     created_date = db.Column(db.DateTime, default=datetime.datetime.now)
+

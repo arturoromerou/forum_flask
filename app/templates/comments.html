@@ -6,31 +6,27 @@
 
     {% from "_macro.html" import render_field %}
     
-    <div class="col align-self-center">
-        
-        <form name="sentMessage" id="contactForm" method="POST">
+    <img class="rounded mx-auto d-block mt-2" src="{{ url_for('static', filename='image/Youth_Speak_Forum_Logo.png') }}" 
+    alt="forum_logo" id="lgn_img">
 
-            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+    <h3 class="text-center">Agregar Comentario <i class="fas fa-mail-bulk"></i></h3>
 
-            <div class="row control-group">
-                <div class="form-group col-xs-12 floating-label-form-group controls">
-                    
-                    {{ render_field(form.comment, class='form-control') }}
+    <form name="sentMessage" id="contactForm" method="POST">
 
-                    <p class="help-block text-danger"></p>
-                </div>
-            </div>
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
 
-            {{ form.honeypot }}
+        <div id="comment" class="form-group p-1">
+            {{ render_field(form.comment, class='form-control') }}
+            <p class="help-block text-danger"></p>
+        </div>
 
-            <br>
-            <div id="success"></div>
-            <div class="row">
-                <div class="form-group col-xs-12">
-                    <button type="submit" class="btn btn-primary btn-lg">Send</button>
-                </div>
-            </div>
-        </form>
+        {{ form.honeypot }}
 
-    </div>
+        <div class="form-group" id="div-cmt">
+            <button type="submit" class="btn btn-primary btn-lg btn-block" id="btn-cmt">
+                Send <i class="fas fa-paper-plane"></i>
+            </button>
+        </div>
+    </form>
+
 {% endblock %}

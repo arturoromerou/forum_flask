@@ -19,7 +19,7 @@
     border-radius: 20px;
 }
 
-#jbt_btn {
+#jbt_btn, #btn-cmt{
     border-radius: 20px;
 }
 
@@ -37,4 +37,17 @@
 
 #div-404 {
     background-color: rgb(1, 85, 85);
+}
+
+#comment {
+    border-radius: 30px;
+}
+
+#chat_img{
+    width: 30%;
+}
+
+#div-cmt{
+    padding-left: 40%;
+    padding-right: 40%;
 }
