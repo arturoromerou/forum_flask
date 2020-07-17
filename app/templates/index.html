@@ -2,6 +2,39 @@
 
 {% block title %} Index {% endblock %}
 
+{% block navbar %}
+    <a class="navbar-brand" href="/">
+        <img src="{{ url_for('static', filename='image/Youth_Speak_Forum_Logo.png') }}" 
+            width="40" height="40" class="d-inline-block align-top" alt="logo" loading="lazy">
+    </a>
+
+    <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
+
+        <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+            <li class="nav-item active">
+            <a class="nav-link" href="/comments">Comentarios<span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+            <a class="nav-link" href="#">Chat</a>
+            </li>
+            <li class="nav-item">
+            <a class="nav-link" href="#" tabindex="-1" aria-disabled="true">Usuarios</a>
+            </li>
+        </ul>
+
+        <div>
+            <a href="/login">
+                <button class="btn btn-outline-primary my-2 my-sm-0" type="submit" id="nav_entrar">Entrar</button>
+            </a>
+
+            <a href="/register">
+                <button class="btn btn-primary my-2 my-sm-0" type="button" id="nav_unirse">Unirse</button>
+            </a>
+        </div>
+        
+    </div>
+{% endblock %}
+
 {% block content %}
 
     <div class="row">
@@ -52,7 +85,7 @@
                     <div class="row">
                         <div class="form-group col-xs-12 pl-5 pr-5">
                             <button type="submit" class="btn btn-outline-primary">Entrar</button>
-                            <a href="">
+                            <a href="/register">
                                 <button type="button" class="btn btn-outline-secondary">Registro</button>
                             </a>
                         </div>

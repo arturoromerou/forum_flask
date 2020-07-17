@@ -8,6 +8,7 @@
 
 .error {
     background-color: red;
+    color: white;
 }
 
 #nav_entrar {
@@ -32,4 +33,8 @@
 
 #ipt-usr {
     border-radius: 20px;
+}
+
+#div-404 {
+    background-color: rgb(1, 85, 85);
 }
