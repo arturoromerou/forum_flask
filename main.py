@@ -121,7 +121,7 @@ def login():
 
 @app.route('/user', methods=['GET', 'POST'])
 def user_page():
-   return render_template('index_session.html')
+    return render_template('index_session.html')
 
 @app.route('/logout')
 def logout():
