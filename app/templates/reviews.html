@@ -19,7 +19,8 @@
                     Publicado por: {{ post.username }}
                 </p>
                 <footer class="blockquote-footer" style="color: black;">
-                  {{ post.created_date() | humanize('naturalday') }}
+
+                    {{ post.created_date | humanize('naturalday') }}
                 </footer>
             </div>
             </div>
