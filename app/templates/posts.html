@@ -1,0 +1,37 @@
+{% extends 'base/base_user.html' %}
+
+{% block title %} Comentarios {% endblock %}
+
+{% block content %}
+
+    {% from "_macro.html" import render_field %}
+    
+    <img class="rounded mx-auto d-block mt-2" src="{{ url_for('static', filename='image/Youth_Speak_Forum_Logo.png') }}" 
+    alt="forum_logo" id="lgn_img">
+
+    <h3 class="text-center">Agregar Comentario <i class="fas fa-mail-bulk"></i></h3>
+
+    <form name="sentMessage" id="postsForm" method="POST">
+
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+        <div id="comment" class="form-group p-1">
+            {{ render_field(form.title, class='form-control') }}
+            <p class="help-block text-danger"></p>
+        </div>
+
+        <div id="comment" class="form-group p-1">
+            {{ render_field(form.content, class='form-control') }}
+            <p class="help-block text-danger"></p>
+        </div>
+
+        {{ form.honeypot }}
+
+        <div class="form-group" id="div-cmt">
+            <button type="submit" class="btn btn-primary btn-lg btn-block" id="btn-cmt">
+                Send <i class="fas fa-paper-plane"></i>
+            </button>
+        </div>
+    </form>
+
+{% endblock %}

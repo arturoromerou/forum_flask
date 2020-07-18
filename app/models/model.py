@@ -1,5 +1,6 @@
 from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
+from sqlalchemy import MetaData
 import datetime
 
 db = SQLAlchemy()
@@ -26,6 +27,15 @@ class User(db.Model):
     '''esta funcion recibe el password en plano y lo compara con el password encriptado en la bd'''
     def verify_password(self, password):
         return bcrypt.check_password_hash(self.password, password)
+
+class Post(db.Model):
+    __tablename__ = 'posts'
+
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    title = db.Column(db.String(50))
+    text = db.Column(db.Text())
+    created_date = db.Column(db.DateTime, default=datetime.datetime.now)
 
 class Comment(db.Model):
     __tablename__ = 'comments'

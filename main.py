@@ -11,20 +11,27 @@ from instance.config import DevelopmentConfig
 
 from app.models.model import db
 from app.models.model import User
-from app.models.model import Comment
+from app.models.model import Post
 
 from flask_wtf.csrf import CSRFProtect
 from app.controllers import forms
 
 from app.controllers.helper import date_format
 
+from flask_humanize import Humanize
+
 app = Flask(__name__, template_folder='app/templates', static_folder='app/static')
 app.config.from_object(DevelopmentConfig)
 csrf = CSRFProtect()
+humanize = Humanize()
 
 def create_session(username = '', user_id = ''):
     session['username'] = username
     session['user_id'] = user_id
+
+@humanize.localeselector
+def get_locale():
+    return 'en'
 
 @app.errorhandler(404)
 def page_not_found(e):
@@ -32,7 +39,7 @@ def page_not_found(e):
 
 @app.before_request
 def before_request():
-    if 'username' not in session and request.endpoint in ['comments', 'reviews']:
+    if 'username' not in session and request.endpoint in ['posts', 'reviews']:
         return redirect(url_for('login'))
 
     elif 'username' in session and request.endpoint in ['login', 'register']:
@@ -129,44 +136,57 @@ def logout():
        session.pop('username')
     return redirect(url_for('index'))
 
-@app.route('/comments', methods = ['GET', 'POST'])
-def comments():
-    comment_form = forms.CommentForm(request.form)
-    if request.method == 'POST' and comment_form.validate():
+@app.route('/new_post', methods = ['GET', 'POST'])
+def posts():
+    post_form = forms.PostForm(request.form)
+    if request.method == 'POST' and post_form.validate():
         
         user_id = session['user_id']
-        comment = Comment(user_id = user_id, 
-                        text = comment_form.comment.data,)
+        post = Post(user_id = user_id, 
+                    title = post_form.title.data,
+                    text = post_form.content.data)
         
-        db.session.add(comment)
+        db.session.add(post)
         db.session.commit()
 
-        success_message = 'Comentario agregado!'
+        success_message = 'Post agregado!'
         flash(success_message)
 
-    title = "Comment"
-    return render_template('comments.html', title = title, form = comment_form)
+    title = "Posts"
+    return render_template('posts.html', title = title, form = post_form)
 
 @app.route('/reviews', methods = ['GET'])
 @app.route('/reviews/<int:page>', methods=['GET'])
 def reviews(page=1):
-    comment_list = Comment.query.join(User).add_columns(
+    posts_list = Post.query.join(User).add_columns(
                     User.username, 
-                    Comment.text,
-                    Comment.created_date).paginate(
+                    Post.title,
+                    Post.text,
+                    Post.created_date).paginate(
                         page,
                         app.config['POSTS_PER_PAGE'],
                         False)
         
     return render_template('reviews.html',
-        comments = comment_list,
-        date_format = date_format)
+        posts = posts_list)
+
+@app.route('/users', methods=['GET'])
+def users():
+    m = MetaData()
+    m.reflect(engine)
+    for table in m.values():
+        print(username)
+        for column in table.c:
+            print(column.name)
+
+    return render_template('users.html', users=user)
 
 if __name__ == '__main__':
+    humanize.init_app(app)
     csrf.init_app(app)
     db.init_app(app)
 
     with app.app_context():
         db.create_all()
 
-    app.run(port=5000)
+    app.run(port=3000)

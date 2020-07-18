@@ -53,8 +53,13 @@ class LoginForm(Form):
                             ]
                             )
 
-class CommentForm(Form):
+class PostForm(Form):
     
-    comment = TextAreaField('')
-    honeypot = HiddenField('', [length_honeypot])
+    title = StringField('Titulo del Post',
+                        [ 
+                            validators.Required(message='el Titulo es requerido'),
+                            validators.length(min=3, max=50, message='Ingresa un Titulo valido!.')
+                        ]
+                        )
+    content = TextAreaField('Contenido del Post')
 
