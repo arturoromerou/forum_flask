@@ -63,3 +63,6 @@ class PostForm(Form):
                         )
     content = TextAreaField('Contenido del Post')
 
+class CommentForm(Form):
+    comment = TextField('Comentario')
+

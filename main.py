@@ -12,6 +12,7 @@ from instance.config import DevelopmentConfig
 from app.models.model import db
 from app.models.model import User
 from app.models.model import Post
+from app.models.model import Comment
 
 from flask_wtf.csrf import CSRFProtect
 from app.controllers import forms
@@ -155,9 +156,22 @@ def posts():
     title = "Posts"
     return render_template('posts.html', title = title, form = post_form)
 
-@app.route('/reviews', methods = ['GET'])
-@app.route('/reviews/<int:page>', methods=['GET'])
+@app.route('/reviews', methods = ['GET', 'POST'])
+@app.route('/reviews/<int:page>', methods=['GET', 'POST'])
 def reviews(page=1):
+    comment_form = forms.CommentForm(request.form)
+    if request.method == 'POST' and comment_form.validate():
+        
+        user_id = session['user_id']
+        comment = Comment(user_id = user_id, 
+                        text = comment_form.comment.data)
+
+        db.session.add(comment)
+        db.session.commit()
+
+        success_message = 'Comentario agregado!'
+        flash(success_message)
+
     posts_list = Post.query.join(User).add_columns(
                     User.username, 
                     Post.title,
@@ -166,9 +180,20 @@ def reviews(page=1):
                         page,
                         app.config['POSTS_PER_PAGE'],
                         False)
-        
+
+    comment_list = Comment.query.join(User).add_columns(
+                    User.username, 
+                    Comment.text,
+                    Comment.created_date).paginate(
+                        page, 
+                        app.config['POSTS_PER_PAGE'],
+                        False)
+    
     return render_template('reviews.html',
-        posts = posts_list)
+                            posts = posts_list, 
+                            form = comment_form, 
+                            comments = comment_list,
+                            date_format = date_format)
 
 @app.route('/users', methods=['GET'])
 def users():

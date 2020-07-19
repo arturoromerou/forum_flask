@@ -51,3 +51,9 @@
     padding-left: 40%;
     padding-right: 40%;
 }
+
+#comment-list{
+    margin: 0px;
+    width: 400px;
+    background-color: tomato;
+}
