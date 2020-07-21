@@ -26,25 +26,21 @@
             </div>
         {% endfor %}
     {% endif %}
-    <br>
-    <h4 style="background-color: rgba(0, 0, 0, 0.596);">
-      Comentarios
-    </h4>
+
+    <button type="button" class="collapsible">
+      <h5>Comentarios ({{ comment_count }})</h5>
+    </button>
     {% if comments %}
-      {% for comment in comments.items %}
-        <li id="comment-list" class="list-group-item text-center">
-          <h5 style="color: black;">
-            {{ comment.username }}
-          </h5>
-          <p>
-            {{ comment.text }}
-          </p>
-          <footer class="blockquote-footer" style="color: black;">
-            {{ date_format(comment.created_date) }} 
-          </footer>
-        </li>
-      {% endfor %}
+      <div class="content">
+        {% for comment in comments.items %}
+          <h5 id="user-comment">{{ comment.username }}</h5> 
+            <p id="comment-text">{{ comment.text }}</p>
+            <footer>{{ date_format(comment.created_date) }}</footer>
+            <hr>
+        {% endfor %}
+      </div>
     {% endif %}
+    <br>
     <br>
 
                                           <!-- Agregar comentarios -->

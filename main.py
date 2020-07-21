@@ -19,6 +19,8 @@ from app.controllers import forms
 
 from app.controllers.helper import date_format
 
+from sqlalchemy import func
+
 from flask_humanize import Humanize
 
 app = Flask(__name__, template_folder='app/templates', static_folder='app/static')
@@ -152,6 +154,7 @@ def posts():
 
         success_message = 'Post agregado!'
         flash(success_message)
+        return redirect(url_for('reviews'))
 
     title = "Posts"
     return render_template('posts.html', title = title, form = post_form)
@@ -184,16 +187,18 @@ def reviews(page=1):
     comment_list = Comment.query.join(User).add_columns(
                     User.username, 
                     Comment.text,
-                    Comment.created_date).paginate(
-                        page, 
-                        app.config['POSTS_PER_PAGE'],
-                        False)
+                    Comment.created_date).paginate()
+
+    comment2 = Comment(text = comment_form.comment.data)
+    
+    comment_count = Comment.query.count()
     
     return render_template('reviews.html',
                             posts = posts_list, 
                             form = comment_form, 
                             comments = comment_list,
-                            date_format = date_format)
+                            date_format = date_format,
+                            comment_count = comment_count)
 
 @app.route('/users', methods=['GET'])
 def users():

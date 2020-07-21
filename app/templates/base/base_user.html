@@ -39,6 +39,15 @@
                 </li>
             </ul>
 
+            <div class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    +
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item" href="/new_post">Nuevo Post</a>
+                </div>
+            </div>
+
             <div>
                 <a href="/logout">
                     <button class="btn btn-outline-primary my-2 my-sm-0" 
@@ -86,6 +95,15 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" 
             integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" 
             crossorigin="anonymous"></script>
+
+    <!-- link de jquery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.js"
+            integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
+            crossorigin="anonymous"></script>
+
+    <!-- script local -->
+    <script type="text/javascript" src="{{ url_for('static', filename='js/scripts.js') }}"></script>
+    
 </body>
 </html>
 
