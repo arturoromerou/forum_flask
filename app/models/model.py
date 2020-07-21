@@ -35,6 +35,7 @@ class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     title = db.Column(db.String(50))
+    comment_id = db.relationship('Comment')
     text = db.Column(db.Text())
     created_date = db.Column(db.DateTime, default=datetime.datetime.now)
 
@@ -43,6 +44,7 @@ class Comment(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    post_id = db.Column(db.Integer, db.ForeignKey('posts.id'))
     text = db.Column(db.Text())
     created_date = db.Column(db.DateTime, default=datetime.datetime.now)
 

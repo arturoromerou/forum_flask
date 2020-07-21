@@ -139,6 +139,23 @@ def logout():
        session.pop('username')
     return redirect(url_for('index'))
 
+@app.route('/search_post', methods=['GET', 'POST'])
+def search_post(page=1):
+    posts_list = Post.query.join(User).add_columns(
+                    User.username, 
+                    Post.title,
+                    Post.id,
+                    Post.text,
+                    Post.created_date).paginate(
+                                        page, 
+                                        app.config['POSTS_PER_PAGE'], 
+                                        False)
+
+
+    return render_template('main_posts.html', 
+                            posts = posts_list,
+                            date_format = date_format)
+
 @app.route('/new_post', methods = ['GET', 'POST'])
 def posts():
     post_form = forms.PostForm(request.form)
@@ -154,20 +171,20 @@ def posts():
 
         success_message = 'Post agregado!'
         flash(success_message)
-        return redirect(url_for('reviews'))
+        return redirect(url_for('user'))
 
     title = "Posts"
     return render_template('posts.html', title = title, form = post_form)
 
-@app.route('/reviews', methods = ['GET', 'POST'])
-@app.route('/reviews/<int:page>', methods=['GET', 'POST'])
-def reviews(page=1):
+@app.route('/reviews/<int:post_id>', methods=['GET', 'POST'])
+def reviews(post_id = Post.id):
     comment_form = forms.CommentForm(request.form)
     if request.method == 'POST' and comment_form.validate():
         
         user_id = session['user_id']
-        comment = Comment(user_id = user_id, 
-                        text = comment_form.comment.data)
+        comment = Comment(user_id = user_id,
+                            post_id = post_id,
+                            text = comment_form.comment.data)
 
         db.session.add(comment)
         db.session.commit()
@@ -175,21 +192,14 @@ def reviews(page=1):
         success_message = 'Comentario agregado!'
         flash(success_message)
 
-    posts_list = Post.query.join(User).add_columns(
-                    User.username, 
-                    Post.title,
-                    Post.text,
-                    Post.created_date).paginate(
-                        page,
-                        app.config['POSTS_PER_PAGE'],
-                        False)
+    num = post_id
+    posts_list = db.session.query(Post).filter_by(id=num).first()
 
     comment_list = Comment.query.join(User).add_columns(
-                    User.username, 
+                    User.username,
+                    Comment.post_id, 
                     Comment.text,
-                    Comment.created_date).paginate()
-
-    comment2 = Comment(text = comment_form.comment.data)
+                    Comment.created_date)
     
     comment_count = Comment.query.count()
     
@@ -202,7 +212,6 @@ def reviews(page=1):
 
 @app.route('/users', methods=['GET'])
 def users():
-    m = MetaData()
     m.reflect(engine)
     for table in m.values():
         print(username)

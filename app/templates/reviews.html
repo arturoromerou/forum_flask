@@ -5,67 +5,62 @@
 {% block content %}
 
     {% if posts %}
-        {% for post in posts.items %}
         <br>
             <div class="card text-center text-white bg-secondary">
-            <h5 class="card-header" style="background-color: black;">
-                {{ post.title }}
-            </h5>
-            <div class="card-body">
-                <h5 class="card-title" style="color: black;">
-                    {{ post.text }}
-                </h5>
-                <p class="card-text">
-                    Publicado por: {{ post.username }}
-                </p>
-                <footer class="blockquote-footer" style="color: black;">
+              <h5 class="card-header" style="background-color: black;">
+                  {{ posts.title }}
+              </h5>
+              <div class="card-body">
+                  <h5 class="card-title" style="color: black;">
+                      {{ posts.text }}
+                  </h5>
+                  <p class="card-text">
+                      Publicado por: {{ posts.username }}
+                  </p>
+                  <footer class="blockquote-footer" style="color: black;">
 
-                    {{ post.created_date | humanize('naturalday') }}
-                </footer>
+                  </footer>
+              </div>
             </div>
-            </div>
-        {% endfor %}
-    {% endif %}
 
-    <button type="button" class="collapsible">
-      <h5>Comentarios ({{ comment_count }})</h5>
-    </button>
-    {% if comments %}
-      <div class="content">
-        {% for comment in comments.items %}
-          <h5 id="user-comment">{{ comment.username }}</h5> 
-            <p id="comment-text">{{ comment.text }}</p>
-            <footer>{{ date_format(comment.created_date) }}</footer>
-            <hr>
-        {% endfor %}
-      </div>
-    {% endif %}
-    <br>
-    <br>
-
-                                          <!-- Agregar comentarios -->
-    {% from "_macro.html" import render_field %}
-    <h3 class="text-center">Agregar Comentario <i class="fas fa-mail-bulk"></i></h3>
-
-    <form name="sentMessage" id="contactForm" method="POST">
-
-        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
-
-        <div id="comment" class="form-group p-1">
-            {{ render_field(form.comment, class='form-control') }}
-            <p class="help-block text-danger"></p>
-        </div>
-
-        {{ form.honeypot }}
-
-        <div class="form-group" id="div-cmt">
-            <button type="submit" class="btn btn-primary btn-lg btn-block" id="btn-cmt">
-                Send <i class="fas fa-paper-plane"></i>
+            <button type="button" class="collapsible">
+              <h5>Comentarios ({{ comment_count }})</h5>
             </button>
-        </div>
-    </form>
+            {% if comments %}
+              <div class="content">
+                {% for comment in comments.items %}
+                  <h5 id="user-comment">{{ comment.username }}</h5> 
+                    <p id="comment-text">{{ comment.text }}</p>
+                    <footer>{{ date_format(comment.created_date) }}</footer>
+                    <hr>
+                {% endfor %}
+              </div>
+            {% endif %}
 
-    <br>
+                    <!-- Agregar comentarios -->
+            {% from "_macro.html" import render_field %}
+            <h3 class="text-center">Agregar Comentario <i class="fas fa-mail-bulk"></i></h3>
+
+            <form name="sentMessage" id="contactForm" method="POST">
+
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+
+                <div id="comment" class="form-group p-1">
+                    {{ render_field(form.comment, class='form-control') }}
+                    <p class="help-block text-danger"></p>
+                </div>
+
+                {{ form.honeypot }}
+
+                <div class="form-group" id="div-cmt">
+                    <button type="submit" class="btn btn-primary btn-lg btn-block" id="btn-cmt">
+                        Send <i class="fas fa-paper-plane"></i>
+                    </button>
+                </div>
+                
+            </form>
+            
+    {% endif %}
 
 {% endblock %}
 

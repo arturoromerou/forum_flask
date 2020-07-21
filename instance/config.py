@@ -2,7 +2,7 @@ import os
 
 class Config(object):
     SECRET_KEY = 'Ar2098urd'
-    POSTS_PER_PAGE = 5
+    POSTS_PER_PAGE = 10
 
 class DevelopmentConfig(Config):
     DEBUG = True
