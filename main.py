@@ -46,7 +46,7 @@ def before_request():
     if 'username' not in session and request.endpoint in ['posts', 'reviews']:
         return redirect(url_for('login'))
 
-    elif 'username' in session and request.endpoint in ['login', 'register', 'index']:
+    elif 'username' in session and request.endpoint in ['login', 'sing_up', 'index']:
         return redirect(url_for('user_page'))
 
 @app.route('/', methods = ['GET', 'POST'])
