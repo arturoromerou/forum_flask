@@ -2,3 +2,4 @@ Flask==1.1.2
 pylint==2.5.3
 PyMySQL==0.9.3
 flask_bcrypt==0.7.1
+marshmallow==3.7.1

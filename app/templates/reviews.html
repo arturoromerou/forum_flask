@@ -4,38 +4,41 @@
 
 {% block content %}
 
-    {% if posts %}
-        <br>
+    {% if post %}
             <div class="card text-center text-white bg-secondary">
               <h5 class="card-header" style="background-color: black;">
-                  {{ posts.title }}
+                  {{ post.title }}
               </h5>
               <div class="card-body">
                   <h5 class="card-title" style="color: black;">
-                      {{ posts.text }}
+                      {{ post.text }}
                   </h5>
                   <p class="card-text">
-                      Publicado por: {{ posts.username }}
+                      Publicado por: {{ post.user_id }}
                   </p>
                   <footer class="blockquote-footer" style="color: black;">
-
+                    {{ date_format(post.created_date) }}
                   </footer>
               </div>
             </div>
 
+            
             <button type="button" class="collapsible">
-              <h5>Comentarios ({{ comment_count }})</h5>
+                <h5>Comentarios ( {{ comment_len }} )</h5>
             </button>
-            {% if comments %}
-              <div class="content">
-                {% for comment in comments.items %}
-                  <h5 id="user-comment">{{ comment.username }}</h5> 
-                    <p id="comment-text">{{ comment.text }}</p>
-                    <footer>{{ date_format(comment.created_date) }}</footer>
-                    <hr>
-                {% endfor %}
-              </div>
-            {% endif %}
+                
+                    <ul class="list-group">
+                        {% for comment in comments %}
+                        <li class="list-group-item">
+                            <h5 id="user-comment">{{ comment.text }}</h5>
+                            <h6>{{ comment.user_id }}</h6>
+                            <h6>{{ comment.created_date }}</h6>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                
+            <br>
+            <br>
 
                     <!-- Agregar comentarios -->
             {% from "_macro.html" import render_field %}

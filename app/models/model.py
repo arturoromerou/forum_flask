@@ -1,6 +1,6 @@
 from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
-from sqlalchemy import MetaData
+from marshmallow import Schema, fields
 import datetime
 
 db = SQLAlchemy()

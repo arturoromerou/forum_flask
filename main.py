@@ -6,6 +6,7 @@ from flask import flash
 from flask import url_for
 from flask import session
 from flask import redirect
+from flask import json
 
 from instance.config import DevelopmentConfig
 
@@ -171,7 +172,7 @@ def posts():
 
         success_message = 'Post agregado!'
         flash(success_message)
-        return redirect(url_for('user'))
+        return redirect(url_for('search_post'))
 
     title = "Posts"
     return render_template('posts.html', title = title, form = post_form)
@@ -193,22 +194,16 @@ def reviews(post_id = Post.id):
         flash(success_message)
 
     num = post_id
-    posts_list = db.session.query(Post).filter_by(id=num).first()
-
-    comment_list = Comment.query.join(User).add_columns(
-                    User.username,
-                    Comment.post_id, 
-                    Comment.text,
-                    Comment.created_date)
-    
-    comment_count = Comment.query.count()
+    posts = db.session.query(Post).filter_by(id=num).first()
+    comment = db.session.query(Comment).filter(Comment.post_id==num).all()
+    comment_len = len(comment)
     
     return render_template('reviews.html',
-                            posts = posts_list, 
-                            form = comment_form, 
-                            comments = comment_list,
-                            date_format = date_format,
-                            comment_count = comment_count)
+                            post = posts,
+                            form = comment_form,
+                            comment_len = comment_len,
+                            comments = comment,
+                            date_format = date_format)
 
 @app.route('/users', methods=['GET'])
 def users():
@@ -228,4 +223,4 @@ if __name__ == '__main__':
     with app.app_context():
         db.create_all()
 
-    app.run(port=3000)
+    app.run(port=8000)
