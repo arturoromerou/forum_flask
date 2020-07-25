@@ -1,5 +1,5 @@
 from wtforms import Form
-from wtforms import StringField, PasswordField, TextField, DateField, TextAreaField
+from wtforms import StringField, PasswordField, TextField, DateField, TextAreaField, FileField
 from wtforms.fields.html5 import EmailField
 from wtforms import HiddenField
 from wtforms import validators
@@ -55,13 +55,13 @@ class LoginForm(Form):
 
 class PostForm(Form):
     
-    title = StringField('Titulo del Post',
+    title = StringField('Titulo',
                         [ 
                             validators.Required(message='el Titulo es requerido'),
                             validators.length(min=3, max=50, message='Ingresa un Titulo valido!.')
                         ]
                         )
-    content = TextAreaField('Contenido del Post')
+    content = TextAreaField('Contenido')
 
 class CommentForm(Form):
     comment = TextField('Comentario')

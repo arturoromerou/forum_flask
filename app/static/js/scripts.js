@@ -1,3 +1,4 @@
+// comentarios que se ocultan al presionar un boton
 var coll = document.getElementsByClassName("collapsible");
 var i;
 
@@ -11,4 +12,4 @@ for (i = 0; i < coll.length; i++) {
       content.style.display = "block";
     }
   });
-} 
+}
