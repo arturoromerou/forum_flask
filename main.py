@@ -8,6 +8,8 @@ from flask import session
 from flask import redirect
 from flask import json
 
+from flask_socketio import SocketIO, send
+
 from instance.config import DevelopmentConfig
 
 from app.models.model import db
@@ -28,6 +30,7 @@ app = Flask(__name__, template_folder='app/templates', static_folder='app/static
 app.config.from_object(DevelopmentConfig)
 csrf = CSRFProtect()
 humanize = Humanize()
+socketio = SocketIO()
 
 def create_session(username = '', user_id = ''):
     session['username'] = username
@@ -43,7 +46,7 @@ def page_not_found(e):
 
 @app.before_request
 def before_request():
-    if 'username' not in session and request.endpoint in ['posts', 'reviews']:
+    if 'username' not in session and request.endpoint in ['posts', 'search_post']:
         return redirect(url_for('login'))
 
     elif 'username' in session and request.endpoint in ['login', 'sing_up', 'index']:
@@ -215,10 +218,15 @@ def users():
 
     return render_template('users.html', users=user)
 
+@app.route('/chatroom')
+def chat():
+   return render_template('chat.html')
+
 if __name__ == '__main__':
     humanize.init_app(app)
     csrf.init_app(app)
     db.init_app(app)
+    socketio.init_app(app)
 
     with app.app_context():
         db.create_all()

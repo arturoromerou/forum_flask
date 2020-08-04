@@ -29,10 +29,10 @@
 
             <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
                 <li class="nav-item active">
-                <a class="nav-link" href="/search_post">Posts<span class="sr-only">(current)</span></a>
+                <a class="nav-link" href="{{ url_for('search_post') }}">Posts<span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
-                <a class="nav-link" href="#">Chat</a>
+                <a class="nav-link" href="{{ url_for('chat') }}">Chat</a>
                 </li>
                 <li class="nav-item">
                 <a class="nav-link" href="#" tabindex="-1" aria-disabled="true">Usuarios</a>
@@ -44,12 +44,12 @@
                     +
                 </button>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <a class="dropdown-item" href="/new_post">Nuevo Post</a>
+                    <a class="dropdown-item" href="{{ url_for('posts') }}">Nuevo Post</a>
                 </div>
             </div>
 
             <div>
-                <a href="/logout">
+                <a href="{{ url_for('logout') }}">
                     <button class="btn btn-outline-primary my-2 my-sm-0" 
                     type="submit" id="nav_entrar">
                     Cerrar Sesion
@@ -104,6 +104,15 @@
     <!-- script local -->
     <script type="text/javascript" src="{{ url_for('static', filename='js/scripts.js') }}"></script>
     
+    <!-- script Socket Io -->
+    <script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js" integrity="sha256-yr4fRk/GU1ehYJPAs8P4JlTgu0Hdsp4ZKrx8bDEDC3I=" crossorigin="anonymous"></script>
+    <script type="text/javascript" charset="utf-8">
+        var socket = io();
+        socket.on('connect', function() {
+            socket.emit('my event', {data: 'I\'m connected!'});
+        });
+    </script>
+
 </body>
 </html>
 

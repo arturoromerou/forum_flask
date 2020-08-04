@@ -26,10 +26,10 @@
     
             <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
                 <li class="nav-item active">
-                <a class="nav-link" href="/reviews">Posts<span class="sr-only">(current)</span></a>
+                <a class="nav-link" href="{{ url_for('search_post') }}">Posts<span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
-                <a class="nav-link" href="#">Chat</a>
+                <a class="nav-link" href="{{ url_for('chat') }}">Chat</a>
                 </li>
                 <li class="nav-item">
                 <a class="nav-link" href="#" tabindex="-1" aria-disabled="true">Usuarios</a>
@@ -37,11 +37,11 @@
             </ul>
     
             <div>
-                <a href="/login">
+                <a href="{{ url_for('login') }}">
                     <button class="btn btn-outline-primary my-2 my-sm-0" type="submit" id="nav_entrar">Entrar</button>
                 </a>
     
-                <a href="/register">
+                <a href="{{ url_for('sing_up') }}">
                     <button class="btn btn-primary my-2 my-sm-0" type="button" id="nav_unirse">Unirse</button>
                 </a>
             </div>
